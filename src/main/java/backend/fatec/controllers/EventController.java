@@ -123,10 +123,11 @@ public class EventController {
             var event = new Event();
             BeanUtils.copyProperties(eventRecordDto, event);
 
-            Optional<Event> activeEvent = eventRepository.getCustomerActiveEvent((event.getCustomer().getCustomerId()));
-            if(activeEvent.isPresent()){
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponseRecordDto("Existe um evento ativo pendente para esse cliente"));
-            }
+            // Now is possible to create more than one active event by client
+            // Optional<Event> activeEvent = eventRepository.getCustomerActiveEvent((event.getCustomer().getCustomerId()));
+            // if(activeEvent.isPresent()){
+            //     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponseRecordDto("Existe um evento ativo pendente para esse cliente"));
+            // }
 
             return ResponseEntity.status(HttpStatus.CREATED).body(eventRepository.save(event));  
         }catch(Exception e){
